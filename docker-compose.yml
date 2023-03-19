@@ -1,0 +1,20 @@
+version: "3"
+services:
+  apiapp:
+    image: clue/json-server
+    volumes:
+      - ./json-server/:/data/
+    ports:
+      - '1337:80'
+
+  nodeapp:
+    image: node:18.15.0
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./app:/app
+    depends_on:
+      - apiapp
+    tty: true
+    working_dir: /app
+

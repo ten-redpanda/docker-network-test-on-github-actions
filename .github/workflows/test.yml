@@ -1,0 +1,26 @@
+name: 'test'
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+    
+      - name: Install dependencies
+        working-dir: app
+        run: |
+          npm install
+      
+      - name: docker compose up
+        run: |
+          docker compose up -d
+
+      - name: test run
+        run: |
+          docker compose exec nodeapp node /app/index.js
